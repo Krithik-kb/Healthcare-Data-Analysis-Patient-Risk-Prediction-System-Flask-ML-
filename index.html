@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTrack Premium | Smart Carbon Footprint Platform</title>
+    
+    <!-- Google Fonts: Inter & Outfit for premium typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark"> <!-- Premium Dark Mode Default -->
+
+    <!-- Ambient Background Elements -->
+    <div class="ambient-bg shape-1"></div>
+    <div class="ambient-bg shape-2"></div>
+    <div class="ambient-bg shape-3"></div>
+
+    <!-- Premium Navigation -->
+    <nav class="premium-nav">
+        <div class="logo">
+            <i class="fa-solid fa-leaf text-gradient"></i>
+            <span class="logo-text">EcoTrack</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" data-target="home" class="active"><i class="fa-solid fa-house"></i> <span>Home</span></a></li>
+            <li><a href="#" data-target="assessment"><i class="fa-solid fa-clipboard-list"></i> <span>Assessment</span></a></li>
+            <li><a href="#" data-target="dashboard"><i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span></a></li>
+            <li><a href="#" data-target="simulator"><i class="fa-solid fa-sliders"></i> <span>Simulator</span></a></li>
+            <li><a href="#" data-target="reports"><i class="fa-solid fa-chart-line"></i> <span>Reports</span></a></li>
+            <li><a href="#" data-target="hub"><i class="fa-solid fa-lightbulb"></i> <span>Eco Hub</span></a></li>
+        </ul>
+        <div class="nav-actions">
+            <div class="streak-badge" title="Active Streak">
+                <i class="fa-solid fa-fire text-orange"></i> <span id="nav-streak">12 Days</span>
+            </div>
+            <button id="theme-toggle" class="btn-icon"><i class="fa-solid fa-sun"></i></button>
+        </div>
+    </nav>
+
+    <!-- Main Content App -->
+    <main id="app-content">
+
+        <!-- 1. Landing Page -->
+        <section id="home" class="page-view active">
+            <div class="hero-premium">
+                <div class="hero-text gs-reveal">
+                    <div class="badge-new">Version 2.0 is Live</div>
+                    <h1>Your Personal <br><span class="text-gradient">Climate Action</span> Engine.</h1>
+                    <p>Go beyond a simple calculator. Discover AI-driven insights, simulate lifestyle changes, and track your sustainable journey with stunning visualizations.</p>
+                    <div class="hero-cta">
+                        <button class="btn btn-gradient nav-btn" data-target="assessment">Start Smart Assessment <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="hero-graphic gs-reveal">
+                    <!-- Advanced CSS/SVG Earth Animation Placeholder -->
+                    <div class="planet-container">
+                        <div class="planet"></div>
+                        <div class="orbit">
+                            <i class="fa-solid fa-leaf orbit-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-grid gs-reveal">
+                <div class="bento-card glass">
+                    <i class="fa-solid fa-chart-simple bento-icon"></i>
+                    <h3>Deep Analytics</h3>
+                    <p>Compare against national and global benchmarks in real-time.</p>
+                </div>
+                <div class="bento-card glass">
+                    <i class="fa-solid fa-gamepad bento-icon"></i>
+                    <h3>Gamified Progress</h3>
+                    <p>Earn badges, maintain streaks, and level up your eco-status.</p>
+                </div>
+                <div class="bento-card glass">
+                    <i class="fa-solid fa-flask bento-icon"></i>
+                    <h3>What-If Simulator</h3>
+                    <p>Model the exact impact of changing your habits instantly.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Smart Assessment -->
+        <section id="assessment" class="page-view">
+            <div class="wizard-header gs-reveal">
+                <h2>Smart Sustainability Assessment</h2>
+                <div class="progress-bar-container">
+                    <div class="progress-fill" id="wizard-progress"></div>
+                </div>
+                <p class="step-indicator">Step <span id="current-step">1</span> of 4: <span id="step-title">Transport</span></p>
+            </div>
+
+            <div class="wizard-container glass gs-reveal">
+                <form id="smart-form">
+                    
+                    <!-- Step 1: Transport -->
+                    <div class="wizard-step active" data-step="1">
+                        <div class="question-block">
+                            <label>How many kilometers do you drive a car daily?</label>
+                            <div class="slider-group">
+                                <input type="range" id="q-car" min="0" max="100" value="10">
+                                <span class="val-display"><span id="q-car-val">10</span> km</span>
+                            </div>
+                        </div>
+                        <div class="question-block">
+                            <label>How many kilometers do you commute via public transit daily?</label>
+                            <div class="slider-group">
+                                <input type="range" id="q-public" min="0" max="100" value="5">
+                                <span class="val-display"><span id="q-public-val">5</span> km</span>
+                            </div>
+                        </div>
+                        <div class="question-block">
+                            <label>How many hours of flight travel do you do per year?</label>
+                            <input type="number" class="premium-input" id="q-flight" min="0" value="4">
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Energy -->
+                    <div class="wizard-step" data-step="2">
+                        <div class="question-block">
+                            <label>What is your monthly household electricity usage?</label>
+                            <div class="input-with-suffix">
+                                <input type="number" class="premium-input" id="q-kwh" min="0" value="250">
+                                <span class="suffix">kWh</span>
+                            </div>
+                        </div>
+                        <div class="question-block">
+                            <label>What percentage of your energy comes from renewable sources?</label>
+                            <div class="slider-group">
+                                <input type="range" id="q-renewable" min="0" max="100" value="10">
+                                <span class="val-display"><span id="q-renewable-val">10</span>%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Diet -->
+                    <div class="wizard-step" data-step="3">
+                        <div class="question-block">
+                            <label>Select your primary diet type:</label>
+                            <div class="radio-cards">
+                                <label class="radio-card">
+                                    <input type="radio" name="diet" value="vegan">
+                                    <div class="rc-content">
+                                        <i class="fa-solid fa-seedling"></i> Vegan
+                                    </div>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="diet" value="vegetarian">
+                                    <div class="rc-content">
+                                        <i class="fa-solid fa-carrot"></i> Vegetarian
+                                    </div>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="diet" value="mixed" checked>
+                                    <div class="rc-content">
+                                        <i class="fa-solid fa-utensils"></i> Mixed
+                                    </div>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="diet" value="meat-heavy">
+                                    <div class="rc-content">
+                                        <i class="fa-solid fa-drumstick-bite"></i> Meat Heavy
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Lifestyle -->
+                    <div class="wizard-step" data-step="4">
+                        <div class="question-block">
+                            <label>How many new clothing items do you buy monthly?</label>
+                            <input type="number" class="premium-input" id="q-clothes" min="0" value="2">
+                        </div>
+                        <div class="question-block">
+                            <label>How rigorous are your recycling habits?</label>
+                            <select class="premium-select" id="q-recycle">
+                                <option value="none">I rarely recycle</option>
+                                <option value="some" selected>I recycle paper and plastics</option>
+                                <option value="most">I compost and recycle everything</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="wizard-actions">
+                        <button type="button" class="btn btn-secondary" id="wiz-prev" style="visibility: hidden;">Back</button>
+                        <button type="button" class="btn btn-primary" id="wiz-next">Continue <i class="fa-solid fa-arrow-right"></i></button>
+                        <button type="submit" class="btn btn-gradient" id="wiz-submit" style="display: none;">Analyze Profile <i class="fa-solid fa-microchip"></i></button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Assessment Results Splash -->
+            <div id="assessment-results" class="glass gs-reveal" style="display: none; text-align: center; padding: 4rem 2rem;">
+                <i class="fa-solid fa-check-circle text-gradient" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                <h2>Profile Analyzed Successfully</h2>
+                <p>Your lifestyle footprint is approx <strong class="text-gradient"><span id="splash-co2">0</span> kg CO₂/mo</strong>.</p>
+                <button class="btn btn-gradient nav-btn mt-2" data-target="dashboard">Go to Dashboard</button>
+            </div>
+        </section>
+
+        <!-- 3. Dashboard -->
+        <section id="dashboard" class="page-view">
+            <div class="dash-grid">
+                
+                <!-- Main Status Card -->
+                <div class="dash-card hero-dash glass">
+                    <div class="dash-hero-info">
+                        <h3>Your Carbon Status</h3>
+                        <div class="main-score">
+                            <span id="dash-main-co2">--</span> <span class="unit">kg CO₂/mo</span>
+                        </div>
+                        <div class="eco-rank">
+                            <i class="fa-solid fa-medal rank-icon"></i> Rank: <strong id="dash-rank" class="text-gradient">Evaluating...</strong>
+                        </div>
+                        <p class="tree-offset">
+                            <i class="fa-solid fa-tree text-green"></i> Equivalent to <strong id="dash-trees">--</strong> mature trees needed for offset per month.
+                        </p>
+                    </div>
+                    <div class="progress-container">
+                        <!-- 3D styled SVG Ring -->
+                        <svg class="circular-chart" viewBox="0 0 36 36">
+                            <path class="circle-bg"
+                              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path class="circle" id="dash-ring"
+                              stroke-dasharray="0, 100"
+                              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <div class="ring-label" id="dash-ring-percent">0%</div>
+                    </div>
+                </div>
+
+                <!-- Gamification Card -->
+                <div class="dash-card gamification-card glass">
+                    <div class="points-header">
+                        <i class="fa-solid fa-leaf text-green"></i>
+                        <div>
+                            <h4>Eco Points</h4>
+                            <span class="points-val" id="dash-points">1,250</span>
+                        </div>
+                    </div>
+                    <div class="badges-rack">
+                        <div class="badge unlocked" title="First Assessment"><i class="fa-solid fa-clipboard-check"></i></div>
+                        <div class="badge unlocked" title="3 Day Streak"><i class="fa-solid fa-fire"></i></div>
+                        <div class="badge locked" title="Zero Waste Week"><i class="fa-solid fa-recycle"></i></div>
+                        <div class="badge locked" title="Tree Planter"><i class="fa-solid fa-tree"></i></div>
+                    </div>
+                </div>
+
+                <!-- Emissions Breakdown Chart -->
+                <div class="dash-card chart-card glass">
+                    <h3>Footprint Breakdown</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="dashDoughnut"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Daily Challenges -->
+                <div class="dash-card challenges-card glass">
+                    <h3>Daily Challenges</h3>
+                    <div class="challenge-item">
+                        <label class="premium-checkbox">
+                            <input type="checkbox" data-pts="50">
+                            <span class="cb-box"></span>
+                            Meatless Monday <span class="pts-tag">+50 pts</span>
+                        </label>
+                    </div>
+                    <div class="challenge-item">
+                        <label class="premium-checkbox">
+                            <input type="checkbox" data-pts="100">
+                            <span class="cb-box"></span>
+                            Use Public Transit <span class="pts-tag">+100 pts</span>
+                        </label>
+                    </div>
+                    <div class="challenge-item">
+                        <label class="premium-checkbox">
+                            <input type="checkbox" data-pts="30">
+                            <span class="cb-box"></span>
+                            AC Off for 2 Hrs <span class="pts-tag">+30 pts</span>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 4. What-If Simulator -->
+        <section id="simulator" class="page-view">
+            <div class="section-header gs-reveal">
+                <h2>What-If Simulator</h2>
+                <p>Adjust the sliders to see how small lifestyle changes impact your footprint instantly.</p>
+            </div>
+            
+            <div class="sim-grid">
+                <div class="sim-controls glass gs-reveal">
+                    <h3>Simulate Changes</h3>
+                    
+                    <div class="sim-slider-group">
+                        <label><i class="fa-solid fa-car text-blue"></i> Reduce Car Usage by: <span id="sim-car-val">0</span>%</label>
+                        <input type="range" class="sim-range" id="sim-car" min="0" max="100" value="0">
+                    </div>
+                    
+                    <div class="sim-slider-group">
+                        <label><i class="fa-solid fa-plug text-yellow"></i> Reduce Electricity by: <span id="sim-kwh-val">0</span>%</label>
+                        <input type="range" class="sim-range" id="sim-kwh" min="0" max="100" value="0">
+                    </div>
+                    
+                    <div class="sim-slider-group">
+                        <label><i class="fa-solid fa-drumstick-bite text-red"></i> Shift to Plant-based diet: <span id="sim-vegan-val">0</span>%</label>
+                        <input type="range" class="sim-range" id="sim-vegan" min="0" max="100" value="0">
+                    </div>
+                    
+                    <button class="btn btn-secondary mt-2" id="sim-reset">Reset Scenarios</button>
+                </div>
+                
+                <div class="sim-results glass gs-reveal">
+                    <h3>Projected Impact</h3>
+                    <div class="sim-comparison">
+                        <div class="sim-stat">
+                            <span>Current</span>
+                            <strong id="sim-current-co2">--</strong> <small>kg/mo</small>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-muted"></i>
+                        <div class="sim-stat new">
+                            <span>Simulated</span>
+                            <strong id="sim-new-co2" class="text-gradient">--</strong> <small>kg/mo</small>
+                        </div>
+                    </div>
+                    <div class="sim-savings">
+                        You could save <span id="sim-save-amount" class="text-green">0</span> kg CO₂ per month!
+                    </div>
+                    <div class="chart-wrapper mt-2" style="height: 200px;">
+                        <canvas id="simChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Reports & Averages -->
+        <section id="reports" class="page-view">
+            <div class="section-header gs-reveal">
+                <h2>Analytics & Reports</h2>
+                <p>Compare your footprint globally and review your historical trends.</p>
+            </div>
+            
+            <div class="reports-grid">
+                <!-- Comparison Chart -->
+                <div class="dash-card full-width glass gs-reveal">
+                    <h3>You vs The World</h3>
+                    <div class="chart-wrapper" style="height: 300px;">
+                        <canvas id="compareChart"></canvas>
+                    </div>
+                    <div class="insight-text mt-2">
+                        <i class="fa-solid fa-lightbulb text-yellow"></i> 
+                        <span id="compare-insight">The average Indian emits approx 160 kg CO₂/mo (1.9 tons/yr), while the Global average is ~390 kg CO₂/mo (4.7 tons/yr).</span>
+                    </div>
+                </div>
+                
+                <!-- Monthly Trend -->
+                <div class="dash-card full-width glass gs-reveal">
+                    <div class="flex-between">
+                        <h3>Monthly Trend History</h3>
+                        <button class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i> Export PDF</button>
+                    </div>
+                    <div class="chart-wrapper" style="height: 250px; margin-top: 1rem;">
+                        <canvas id="trendLineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Goals & Eco Hub -->
+        <section id="hub" class="page-view">
+            <div class="section-header gs-reveal">
+                <h2>Goals & Knowledge Hub</h2>
+                <p>Set targets and learn how to achieve them.</p>
+            </div>
+            
+            <div class="hub-grid">
+                <!-- Goals Tracker -->
+                <div class="dash-card glass gs-reveal">
+                    <h3><i class="fa-solid fa-bullseye text-gradient"></i> Active Goals</h3>
+                    
+                    <div class="goal-item">
+                        <div class="flex-between">
+                            <span>Reduce Transport CO₂ by 20%</span>
+                            <span>45%</span>
+                        </div>
+                        <div class="mini-progress">
+                            <div class="mini-fill" style="width: 45%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="goal-item">
+                        <div class="flex-between">
+                            <span>Zero plastic for a week</span>
+                            <span>2/7 Days</span>
+                        </div>
+                        <div class="mini-progress">
+                            <div class="mini-fill" style="width: 28%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="add-goal mt-2">
+                        <input type="text" placeholder="Type a new goal..." class="premium-input" style="width: calc(100% - 100px); display: inline-block;">
+                        <button class="btn btn-primary btn-sm">Add</button>
+                    </div>
+                </div>
+                
+                <!-- Recommendations / AI Tips -->
+                <div class="dash-card glass gs-reveal">
+                    <h3><i class="fa-solid fa-robot text-gradient"></i> Smart Recommendations</h3>
+                    <div id="ai-tips-container" class="tips-list">
+                        <!-- Populated by JS -->
+                        <div class="tip-card">
+                            <i class="fa-solid fa-spinner fa-spin"></i> Analyzing your data...
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Articles Grid -->
+                <div class="dash-card full-width glass gs-reveal">
+                    <h3>Eco Knowledge Base</h3>
+                    <div class="articles-grid">
+                        <div class="article-card">
+                            <div class="art-img" style="background: linear-gradient(45deg, #1abc9c, #2ecc71);"></div>
+                            <div class="art-content">
+                                <h4>Understanding SDG 13</h4>
+                                <p>Learn about the UN's goal for immediate climate action.</p>
+                                <a href="#">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="article-card">
+                            <div class="art-img" style="background: linear-gradient(45deg, #3498db, #2980b9);"></div>
+                            <div class="art-content">
+                                <h4>The Hidden Cost of Fast Fashion</h4>
+                                <p>Why your wardrobe might be your biggest carbon emitter.</p>
+                                <a href="#">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="article-card">
+                            <div class="art-img" style="background: linear-gradient(45deg, #e67e22, #d35400);"></div>
+                            <div class="art-content">
+                                <h4>Energy Efficient Homes</h4>
+                                <p>5 simple hacks to cut your electricity bill and footprint.</p>
+                                <a href="#">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
